@@ -33,8 +33,7 @@ Shanghai is the largest city of by population density, as 3,800 per square kilom
     
 Data Analysis  
 
-```{r}
-echo=FALSE
+```{r,echo=FALSE}
 agri <- read.table(file="data.txt", header=T)
 colnames(agri)[2] <- "Total"
 colnames(agri)[5] <- "Animal"
@@ -45,6 +44,14 @@ agri
 
 
 
-1. Plots
+1. Plots     
 
+Total vs Year
+
+```{r,echo=FALSE}
+plot(agri$Total~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Total Gross Output Value of Agriculture",type="l",lwd=2)
+legend(1954.417,298.218,legend="Gross Output Value",lwd=2)
+
+
+```
 
