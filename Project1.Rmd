@@ -28,5 +28,23 @@ Introduction
 This is the project for the first half of the semester for course Microbiol 612.This project will analyze Gross Output Value of Agriculture from 1949 to 2013 of Shanghai, China. All the data collected in this project is from [Shanghai Statistical Bureau](www.stats-sh.gov.cn).    
 
 Shanghai is the largest city of by population density, as 3,800 per square kilometers, not only in China, but also all around the world. As a result, a large amount of food are required for its development. However, Shanghai is famous as a global financial center, and therefore, most analyses focuse on economy of Shanghai, but neglect agriculture of the city. This project collects data on agriculture from establishment of the People's Repulic of China, 1949, to 2013. And try to find out the growing tendency of agriculture of Shanghai, of different categories.
+    
+    
+    
+Data Analysis  
+
+```{r}
+echo=FALSE
+agri <- read.table(file="data.txt", header=T)
+colnames(agri)[2] <- "Total"
+colnames(agri)[5] <- "Animal"
+colnames(agri)[7] <- "Service"
+agri
+
+```
+
+
+
+1. Plots
 
 
