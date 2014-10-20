@@ -1,4 +1,4 @@
-Year	Total	Planting	Forestry	Animal	Fishery	Service
+Year	Gross_Output_Value_of_Agriculture	Planting	Forestry	Animal_Husbandry	Fishery	Service_Industry_for_Agricalture
 1949	2.27	1.74	0.01	0.29	0.20	NA
 1950	2.62	2.08	0.01	0.31	0.18	NA
 1951	3.16	2.55	0.01	0.37	0.18	NA
