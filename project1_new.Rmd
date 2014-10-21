@@ -1,0 +1,25 @@
+---
+title: "project1_new"
+author: "Hui Zhang"
+date: "Tuesday, October 21, 2014"
+output: html_document
+---
+
+Introduction 
+```{r,echo=FALSE}
+grade <- read.table(file="project_new.txt", header=T)
+
+```
+This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year high school students. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html)      
+
+There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. When I was in high school, senior students and teachers told us grade of `r colnames(grade)[4]` and `r colnames(grade)[6]` could reflect the total grade. In other words, if I could get high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]`, my total grades would not be low. Now, I will use the grades I collected to test this regular pattern.
+
+
+Data Analysis    
+
+Plotting    
+
+Total grade   
+
+
+

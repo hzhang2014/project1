@@ -5,23 +5,6 @@ date: "Saturday, October 18, 2014"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
-```
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-
 
 Introduction
 
@@ -54,13 +37,16 @@ legend(1954.417,298.218,legend="Gross Output Value",lwd=2)
 
 ```
 
-Different Categories vs Year
+Different Categories vs Year     
+
 ```{r,echo=FALSE}
-plot(agri$Planting~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="black")
+plot(agri$Planting~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="purple")
 points(agri$Forestry~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="red")
 points(agri$Animal~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="blue")
 points(agri$Fishery~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="green")
-points(agri$Service~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="yellow")
+points(agri$Service~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="orange")
+legend(1953.953,160.6015,legend=c("Planting","Forestry","Animal Husbandry","Fishery","Service Industry for Agricalture"),col=c("purple","red","blue","green","orange"),lty=1,lwd=2)
+
 ```
 
 
