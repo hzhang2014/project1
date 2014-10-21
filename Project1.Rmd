@@ -52,6 +52,22 @@ Total vs Year
 plot(agri$Total~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Total Gross Output Value of Agriculture",type="l",lwd=2)
 legend(1954.417,298.218,legend="Gross Output Value",lwd=2)
 
-
 ```
 
+Different Categories vs Year
+```{r,echo=FALSE}
+plot(agri$Planting~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="black")
+points(agri$Forestry~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="red")
+points(agri$Animal~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="blue")
+points(agri$Fishery~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="green")
+points(agri$Service~agri$Year,xlab="Year",ylab="Value,100 million Yuan",main="Different Categorial Gross Output Value of Agriculture",type="l",lwd=2,col="yellow")
+```
+
+
+From the figures above, we can see that the data for agricultural output value does not follow normal distribution. Therefore, we cannot use t test, since t test requires data follow normal distribution. Finally, we decided to use a non-parametric test, i.e. Wilcox test, to analyze the data.  
+
+
+
+
+One goal of this project is to find the relationship between totoal agriculture gross output value and different categories.    
+Here we make an assumption that 
