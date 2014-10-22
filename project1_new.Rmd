@@ -12,14 +12,142 @@ grade <- read.table(file="project_new.txt", header=T)
 ```
 This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year high school students. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html)      
 
-There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. When I was in high school, senior students and teachers told us grade of `r colnames(grade)[4]` and `r colnames(grade)[6]` could reflect the total grade. In other words, if I could get high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]`, my total grades would not be low. Now, I will use the grades I collected to test this regular pattern.
+There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. `r nrow(grade)` students are collected in this project. When I was in high school, senior students and teachers told us grade of `r colnames(grade)[4]` and `r colnames(grade)[6]` could reflect the total grade. In other words, if I could get high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]`, my total grades would not be low. Now, I will use the grades I collected to test this regular pattern.
 
 
 Data Analysis    
 
 Plotting    
 
-Total grade   
+1. Total grade distribution    
+The average total grade is `r summary(grade$Total)["Mean"]`. The median grade of `r colnames(grade$Total)` is `r summary(grade$Total)["Median"]`.The minimum total grade is `r summary(grade$Total)["Min."]`, and the maximum total grade is `r summary(grade$Total)["Max."]`. The standard deviation of total grade is `r sd(grade$Total)`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+total.hist<-hist(grade$Total,plot=F,breaks=200)
+plot(total.hist$density~total.hist$mids,type="h",ylab="Density",xlab="Total grade",main="Total Grade Distribution")
+points(0:1500,dnorm(0:1500,600,88),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, total grade are normally distributed. Then how about grade of single subject? Let's check it!      
+
+2. Single subject distribution     
+(1) The average grade of `r colnames(grade[3])` is `r summary(grade[,3])["Mean"]`. The median grade of `r colnames(grade[3])` is `r summary(grade[,3])["Median"]`.The minimum total grade is `r summary(grade[,3])["Min."]`, and the maximum total grade is `r summary(grade$Chinese)["Max."]`. The standard deviation of total grade is `r sd(grade$Chinese)`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+chinese.hist<-hist(grade$Chinese,plot=F,breaks=200)
+plot(chinese.hist$density~chinese.hist$mids,type="h",ylab="Density",xlab="Chinese grade",main="Chinese Grade Distribution")
+points(0:150,dnorm(0:150,101,9),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, Chinese grade are normally distributed.     
+
+(2) The average grade of `r colnames(grade[4])` is `r summary(grade[,4])["Mean"]`. The median grade of `r colnames(grade[4])` is `r summary(grade[,4])["Median"]`. The minimum total grade is `r summary(grade[,4])["Min."]`, and the maximum total grade is `r summary(grade$Math)["Max."]`. The standard deviation of total grade is `r sd(grade$Math)`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+math.hist<-hist(grade$Math,plot=F,breaks=200)
+plot(math.hist$density~math.hist$mids,type="h",ylab="Density",xlab="Math grade",main="Math Grade Distribution")
+points(0:150,dnorm(0:150,105.6,23),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, Math grade are normally distributed.     
+
+(3) The average grade of `r colnames(grade[5])` is `r summary(grade[,5])["Mean"]`. The median grade of `r colnames(grade[5])` is `r summary(grade[,5])["Median"]`. The minimum total grade is `r summary(grade[,5])["Min."]`, and the maximum total grade is `r summary(grade[,5])["Max."]`. The standard deviation of total grade is `r sd(grade[,5])`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+eng.hist<-hist(grade$English,plot=F,breaks=200)
+plot(eng.hist$density~eng.hist$mids,type="h",ylab="Density",xlab="English grade",main="English Grade Distribution")
+points(0:150,dnorm(0:150,109,16),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, English grade are normally distributed.    
+
+(4) The average grade of `r colnames(grade[6])` is `r summary(grade[,6])["Mean"]`. The median grade of `r colnames(grade[6])` is `r summary(grade[,6])["Median"]`. The minimum total grade is `r summary(grade[,6])["Min."]`, and the maximum total grade is `r summary(grade[,6])["Max."]`. The standard deviation of total grade is `r sd(grade[,6])`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+phy.hist<-hist(grade$Physics,plot=F,breaks=200)
+plot(phy.hist$density~phy.hist$mids,type="h",ylab="Density",xlab="Physics grade",main="Physics Grade Distribution")
+points(0:100,dnorm(0:100,62,22),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, Physics grade distribution almost follow normal distribution.    
+
+(5) The average grade of `r colnames(grade[7])` is `r summary(grade[,7])["Mean"]`. The median grade of `r colnames(grade[7])` is `r summary(grade[,7])["Median"]`. The minimum total grade is `r summary(grade[,7])["Min."]`, and the maximum total grade is `r summary(grade[,7])["Max."]`. The standard deviation of total grade is `r sd(grade[,7])`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+chem.hist<-hist(grade$Chemistry,plot=F,breaks=200)
+plot(chem.hist$density~chem.hist$mids,type="h",ylab="Density",xlab="Chemistry grade",main="Chemistry Grade Distribution")
+points(0:100,dnorm(0:100,64,20),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, Chemistry grade distribution is not well normally distributed.       
+```{r,echo=FALSE}
+stripchart(grade$Chemistry,method="jitter",jitter=0.02)
+freq <- tapply(grade$Chemistry,grade$Chemistry,length)
+```
+        
+From the figure above, most grades are concentrated around 60 to 90. The mode of Chemistry grade is `r as.numeric(names(freq)[which.max(freq)])`.
+       
+       
+(6) The average grade of `r colnames(grade[8])` is `r summary(grade[,8])["Mean"]`. The median grade of `r colnames(grade[8])` is `r summary(grade[,8])["Median"]`. The minimum total grade is `r summary(grade[,8])["Min."]`, and the maximum total grade is `r summary(grade[,8])["Max."]`. The standard deviation of total grade is `r sd(grade[,8])`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+poli.hist<-hist(grade$Politics,plot=F,breaks=200)
+plot(poli.hist$density~poli.hist$mids,type="h",ylab="Density",xlab="Politics grade",main="Politics Grade Distribution")
+points(0:100,dnorm(0:100,47,13),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, Politics grade are normally distributed.     
+
+(7) The average grade of `r colnames(grade[9])` is `r summary(grade[,9])["Mean"]`. The median grade of `r colnames(grade[9])` is `r summary(grade[,9])["Median"]`. The minimum total grade is `r summary(grade[,9])["Min."]`, and the maximum total grade is `r summary(grade[,9])["Max."]`. The standard deviation of total grade is `r sd(grade[,9])`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+histo.hist<-hist(grade$History,plot=F,breaks=200)
+plot(histo.hist$density~histo.hist$mids,type="h",ylab="Density",xlab="History grade",main="History Grade Distribution")
+points(0:100,dnorm(0:100,59,12),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, History grade are normally distributed.      
+
+(8) The average grade of `r colnames(grade[10])` is `r summary(grade[,10])["Mean"]`. The median grade of `r colnames(grade[10])` is `r summary(grade[,10])["Median"]`. The minimum total grade is `r summary(grade[,10])["Min."]`, and the maximum total grade is `r summary(grade[,10])["Max."]`. The standard deviation of total grade is `r sd(grade[,10])`.     
+
+Is the grade normally distributed?
+      
+```{r,,echo=FALSE}
+geo.hist<-hist(grade$Geography,plot=F,breaks=200)
+plot(geo.hist$density~geo.hist$mids,type="h",ylab="Density",xlab="Geography grade",main="Geography Grade Distribution")
+points(0:100,dnorm(0:100,52,16),type="l",col="red",lwd=2)
+
+```
+       
+From the figure above, Geography grade are normally distributed.     
+
+3. 
+
+
 
 
 
