@@ -145,7 +145,28 @@ points(0:100,dnorm(0:100,52,16),type="l",col="red",lwd=2)
        
 From the figure above, Geography grade are normally distributed.     
 
-3. 
+3. Relationships between subjects    
+(1) It seems like a rule that students with good grade in math, also have good grade in physics. Is that true? Let's check!     
+```{r,echo=FALSE}
+math.p <- grade$Math/150
+phy.p<-grade$Physics/100
+plot(math.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
+lines(phy.p~grade$Total,col="blue")
+
+```
+      
+Is there any difference between Math and Physics? Use `t test` to analyze.    
+Assume there's no difference between Math and Physics. Then,     
+```{r,echo=FALSE}
+t.test(math.p,phy.p)
+
+```
+From `t.test` above, p-value is `r t.test(math.p,phy.p)$p.value`, which is much smaller than critical value 0.05. Therefore, we can conclude that there is a significant difference between Math and Physics grade. In other words, students who do well in math, are not always good at physics.      
+
+
+(2)
+
+
 
 
 
