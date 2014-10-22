@@ -12,7 +12,7 @@ grade <- read.table(file="project_new.txt", header=T)
 ```
 This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year high school students. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html)      
 
-There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. `r nrow(grade)` students are collected in this project. When I was in high school, senior students and teachers told us grade of `r colnames(grade)[4]` and `r colnames(grade)[6]` could reflect the total grade. In other words, if I could get high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]`, my total grades would not be low. Now, I will use the grades I collected to test this regular pattern.
+There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. `r nrow(grade)` students are collected in this project. When I was in high school, senior students and teachers told us grade of `r colnames(grade)[4]` and `r colnames(grade)[6]` could reflect the total grade. In other words, if I could get high grade in `r colnames(grade)[5]`, my total grades would not be low. Now, I will use the grades I collected to test this regular pattern.
 
 
 Data Analysis    
@@ -152,23 +152,62 @@ math.p <- grade$Math/150
 phy.p<-grade$Physics/100
 plot(math.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
 lines(phy.p~grade$Total,col="blue")
+legend(250,0.9,legend=c("Math","Physics"),col=c("red","blue"),lwd=2)
 
 ```
       
 Is there any difference between Math and Physics? Use `t test` to analyze.    
 Assume there's no difference between Math and Physics. Then,     
 ```{r,echo=FALSE}
-t.test(math.p,phy.p)
+t.test(math.p,phy.p,paired=T)
 
 ```
-From `t.test` above, p-value is `r t.test(math.p,phy.p)$p.value`, which is much smaller than critical value 0.05. Therefore, we can conclude that there is a significant difference between Math and Physics grade. In other words, students who do well in math, are not always good at physics.      
+From `t.test` above, p-value is `r t.test(math.p,phy.p,paired=T)$p.value`, which is much smaller than critical value 0.05. Therefore, we can conclude that there is a significant difference between Math and Physics grade.       
 
 
-(2)
+(2) How about Chinese and Math? I remember that most of my classmates in high school couldn't handle these two subjects at the same time. Is that true for this school? Let's check!    
+```{r,echo=FALSE}
+chinese.p<-grade$Chinese/150
+plot(math.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
+lines(chinese.p~grade$Total,col="blue")
+legend(250,0.9,legend=c("Math","Chinese"),col=c("red","blue"),lwd=2)
 
+```
+   
+```{r,echo=FALSE}
+plot(math.p~chinese.p,pch=18,col="pink")
+lm(math.p~chinese.p)
+abline(b=0.97982,a=0.04356,lwd=2)
+summary(lm(math.p~chinese.p))
 
+```
 
+     
+Is there any difference between Math and Chinese? Use `t test` to analyze.    
+Assume there's no difference between Math and Chinese. Then,     
+```{r,echo=FALSE}
+t.test(math.p,chinese.p,paired=T)
 
+```
+From `t.test` above, p-value is `r t.test(math.p,chinese.p,paired=T)$p.value`, which is much smaller than critical value 0.05. Therefore, we can conclude that there is a significant difference between Math and Chinese grade.     
 
+(3) How about Chinese and English? Students might do better in Chinese than English, since Chinese is the native language for the test students.     
+```{r,echo=FALSE}
+eng.p<-grade$English/150
+plot(chinese.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
+lines(eng.p~grade$Total,col="blue")
+legend(250,0.9,legend=c("Chinese","English"),col=c("red","blue"),lwd=2)
 
+```
+    
+Are Chinese grades higher than English grades? Use `t test` to analyze.    
+Assume there's Chinese grade is higher than English. Then,     
+```{r,echo=FALSE}
+t.test(chinese.p,eng.p,alternative="greater")
 
+```
+From `t.test` above, p-value is `r t.test(math.p,chinese.p,paired=T)$p.value`, which is much smaller than critical value 0.05. The estimated mean of Chinese and English are XXXXXXX and XXXXXXXX. It means grades of Chinese is better than that of English.
+      
+4. Relationships between a specific subject and total grade       
+Now, think about the question in introduction. Is it true that high grades in `r colnames(grade)[5]` indicate high total grades?
+    
