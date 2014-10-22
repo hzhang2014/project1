@@ -199,8 +199,20 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 ##    0.6737    0.7254</code></pre>
 <p>From <code>t.test</code> above, p-value is 2.1116 × 10<sup>-12</sup>, which is much smaller than critical value 0.05. The estimated mean of Chinese and English are XXXXXXX and XXXXXXXX. It means grades of Chinese is better than that of English.</p>
 <ol start="4" style="list-style-type: decimal">
-<li>Now, think about the question in introduction. Is it true that high grades in English indicate high total grades?</li>
+<li><p>Relationships between a specific subject and total grade<br />Now, think about the question in introduction. Is it true that high grades in English indicate high total grades?</p></li>
+<li><p>Another high school in this district got an average total grade of 574.38. Assume both high schools have same standard deviation, could total grade of E high school has been drawn from the same distribution?</p></li>
 </ol>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  grade$Total
+## t = 9.601, df = 1148, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 574.4
+## 95 percent confidence interval:
+##  594.1 604.3
+## sample estimates:
+## mean of x 
+##     599.2</code></pre>
 
 
 </div>

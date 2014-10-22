@@ -10,7 +10,7 @@ Introduction
 grade <- read.table(file="project_new.txt", header=T)
 
 ```
-This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year high school students. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html)      
+This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year high school students. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html).      
 
 There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. `r nrow(grade)` students are collected in this project. When I was in high school, senior students and teachers told us grade of `r colnames(grade)[4]` and `r colnames(grade)[6]` could reflect the total grade. In other words, if I could get high grade in `r colnames(grade)[5]`, my total grades would not be low. Now, I will use the grades I collected to test this regular pattern.
 
@@ -210,4 +210,13 @@ From `t.test` above, p-value is `r t.test(math.p,chinese.p,paired=T)$p.value`, w
       
 4. Relationships between a specific subject and total grade       
 Now, think about the question in introduction. Is it true that high grades in `r colnames(grade)[5]` indicate high total grades?
-    
+      
+      
+      
+      
+5. Another high school in this district got an average total grade of 574.38. Assume both high schools have same standard deviation, could total grade of E high school has been drawn from the same distribution?    
+```{r,echo=FALSE}
+t.test(grade$Total,mu=574.38)
+
+```
+
