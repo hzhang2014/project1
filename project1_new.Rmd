@@ -1,5 +1,5 @@
 ---
-title: "project1_new"
+title: "Project1"
 author: "Hui Zhang"
 date: "Tuesday, October 21, 2014"
 output: html_document
@@ -18,217 +18,6 @@ There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` su
 
 
 Data Analysis    
-
-Plotting    
-
-1. E School Analysis    
-
-1.Total grade distribution    
-The average total grade of School E is `r summary(grade$Total[grade$School== "E"])["Mean"]`. The median grade  is `r summary(grade$Total[grade$School== "E"])["Median"]`.The minimum total grade is `r summary(grade$Total[grade$School== "E"])["Min."]`, and the maximum total grade is `r summary(grade$Total[grade$School== "E"])["Max."]`. The standard deviation of total grade is `r sd(grade$Total[grade$School=="E"])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-e.total.hist<-hist(grade$Total[grade$School=="E"],plot=F,breaks=200)
-plot(e.total.hist$density~e.total.hist$mids,type="h",ylab="Density",xlab="Total grade",main="E School Total Grade Distribution")
-points(0:1500,dnorm(0:1500,600,87.6),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, total grade are normally distributed. Then how about grade of single subject? Let's check it!      
-
-2. Single subject distribution     
-(1) The average grade of `r colnames(grade[3])` in E School is `r summary(grade[,3])["Mean"]`. The median grade of `r colnames(grade[3])` is `r summary(grade[,3])["Median"]`.The minimum total grade is `r summary(grade[,3])["Min."]`, and the maximum total grade is `r summary(grade$Chinese)["Max."]`. The standard deviation of total grade is `r sd(grade$Chinese)`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-e.chinese.hist<-hist(grade$Chinese[grade$School=="E"],plot=F,breaks=200)
-plot(e.chinese.hist$density~e.chinese.hist$mids,type="h",ylab="Density",xlab="Chinese grade",main="Chinese Grade Distribution")
-points(0:150,dnorm(0:150,101,9),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, Chinese grade are normally distributed.     
-
-(2) The average grade of `r colnames(grade[4])` is `r summary(grade[,4])["Mean"]`. The median grade of `r colnames(grade[4])` is `r summary(grade[,4])["Median"]`. The minimum total grade is `r summary(grade[,4])["Min."]`, and the maximum total grade is `r summary(grade$Math)["Max."]`. The standard deviation of total grade is `r sd(grade$Math)`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-math.hist<-hist(grade$Math,plot=F,breaks=200)
-plot(math.hist$density~math.hist$mids,type="h",ylab="Density",xlab="Math grade",main="Math Grade Distribution")
-points(0:150,dnorm(0:150,105.6,23),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, Math grade are normally distributed.     
-
-(3) The average grade of `r colnames(grade[5])` is `r summary(grade[,5])["Mean"]`. The median grade of `r colnames(grade[5])` is `r summary(grade[,5])["Median"]`. The minimum total grade is `r summary(grade[,5])["Min."]`, and the maximum total grade is `r summary(grade[,5])["Max."]`. The standard deviation of total grade is `r sd(grade[,5])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-eng.hist<-hist(grade$English,plot=F,breaks=200)
-plot(eng.hist$density~eng.hist$mids,type="h",ylab="Density",xlab="English grade",main="English Grade Distribution")
-points(0:150,dnorm(0:150,109,16),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, English grade are normally distributed.    
-
-(4) The average grade of `r colnames(grade[6])` is `r summary(grade[,6])["Mean"]`. The median grade of `r colnames(grade[6])` is `r summary(grade[,6])["Median"]`. The minimum total grade is `r summary(grade[,6])["Min."]`, and the maximum total grade is `r summary(grade[,6])["Max."]`. The standard deviation of total grade is `r sd(grade[,6])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-phy.hist<-hist(grade$Physics,plot=F,breaks=200)
-plot(phy.hist$density~phy.hist$mids,type="h",ylab="Density",xlab="Physics grade",main="Physics Grade Distribution")
-points(0:100,dnorm(0:100,62,22),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, Physics grade distribution almost follow normal distribution.    
-
-(5) The average grade of `r colnames(grade[7])` is `r summary(grade[,7])["Mean"]`. The median grade of `r colnames(grade[7])` is `r summary(grade[,7])["Median"]`. The minimum total grade is `r summary(grade[,7])["Min."]`, and the maximum total grade is `r summary(grade[,7])["Max."]`. The standard deviation of total grade is `r sd(grade[,7])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-chem.hist<-hist(grade$Chemistry,plot=F,breaks=200)
-plot(chem.hist$density~chem.hist$mids,type="h",ylab="Density",xlab="Chemistry grade",main="Chemistry Grade Distribution")
-points(0:100,dnorm(0:100,64,20),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, Chemistry grade distribution is not well normally distributed.       
-```{r,echo=FALSE}
-stripchart(grade$Chemistry,method="jitter",jitter=0.02)
-freq <- tapply(grade$Chemistry,grade$Chemistry,length)
-```
-        
-From the figure above, most grades are concentrated around 60 to 90. The mode of Chemistry grade is `r as.numeric(names(freq)[which.max(freq)])`.
-       
-       
-(6) The average grade of `r colnames(grade[8])` is `r summary(grade[,8])["Mean"]`. The median grade of `r colnames(grade[8])` is `r summary(grade[,8])["Median"]`. The minimum total grade is `r summary(grade[,8])["Min."]`, and the maximum total grade is `r summary(grade[,8])["Max."]`. The standard deviation of total grade is `r sd(grade[,8])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-poli.hist<-hist(grade$Politics,plot=F,breaks=200)
-plot(poli.hist$density~poli.hist$mids,type="h",ylab="Density",xlab="Politics grade",main="Politics Grade Distribution")
-points(0:100,dnorm(0:100,47,13),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, Politics grade are normally distributed.     
-
-(7) The average grade of `r colnames(grade[9])` is `r summary(grade[,9])["Mean"]`. The median grade of `r colnames(grade[9])` is `r summary(grade[,9])["Median"]`. The minimum total grade is `r summary(grade[,9])["Min."]`, and the maximum total grade is `r summary(grade[,9])["Max."]`. The standard deviation of total grade is `r sd(grade[,9])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-histo.hist<-hist(grade$History,plot=F,breaks=200)
-plot(histo.hist$density~histo.hist$mids,type="h",ylab="Density",xlab="History grade",main="History Grade Distribution")
-points(0:100,dnorm(0:100,59,12),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, History grade are normally distributed.      
-
-(8) The average grade of `r colnames(grade[10])` is `r summary(grade[,10])["Mean"]`. The median grade of `r colnames(grade[10])` is `r summary(grade[,10])["Median"]`. The minimum total grade is `r summary(grade[,10])["Min."]`, and the maximum total grade is `r summary(grade[,10])["Max."]`. The standard deviation of total grade is `r sd(grade[,10])`.     
-
-Is the grade normally distributed?
-      
-```{r,,echo=FALSE}
-geo.hist<-hist(grade$Geography,plot=F,breaks=200)
-plot(geo.hist$density~geo.hist$mids,type="h",ylab="Density",xlab="Geography grade",main="Geography Grade Distribution")
-points(0:100,dnorm(0:100,52,16),type="l",col="red",lwd=2)
-
-```
-       
-From the figure above, Geography grade are normally distributed.     
-
-3. Relationships between subjects    
-(1) It seems like a rule that students with good grade in math, also have good grade in physics. Is that true? Let's check!     
-```{r,echo=FALSE}
-math.p <- grade$Math/150
-phy.p<-grade$Physics/100
-plot(math.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
-lines(phy.p~grade$Total,col="blue")
-legend(250,0.9,legend=c("Math","Physics"),col=c("red","blue"),lwd=2)
-
-```
-      
-Is there any difference between Math and Physics? Use `t test` to analyze.    
-Assume there's no difference between Math and Physics. Then,     
-```{r,echo=FALSE}
-t.test(math.p,phy.p,paired=T)
-
-```
-From `t.test` above, p-value is `r t.test(math.p,phy.p,paired=T)$p.value`, which is much smaller than critical value 0.05. Therefore, we can conclude that there is a significant difference between Math and Physics grade.       
-
-
-(2) How about Chinese and Math? I remember that most of my classmates in high school couldn't handle these two subjects at the same time. Is that true for this school? Let's check!    
-```{r,echo=FALSE}
-chinese.p<-grade$Chinese/150
-plot(math.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
-lines(chinese.p~grade$Total,col="blue")
-legend(250,0.9,legend=c("Math","Chinese"),col=c("red","blue"),lwd=2)
-
-```
-   
-```{r,echo=FALSE}
-plot(math.p~chinese.p,pch=18,col="pink")
-lm(math.p~chinese.p)
-abline(b=0.97982,a=0.04356,lwd=2)
-summary(lm(math.p~chinese.p))
-
-```
-
-     
-Is there any difference between Math and Chinese? Use `t test` to analyze.    
-Assume there's no difference between Math and Chinese. Then,     
-```{r,echo=FALSE}
-t.test(math.p,chinese.p,paired=T)
-
-```
-From `t.test` above, p-value is `r t.test(math.p,chinese.p,paired=T)$p.value`, which is much smaller than critical value 0.05. Therefore, we can conclude that there is a significant difference between Math and Chinese grade.     
-
-(3) How about Chinese and English? Students might do better in Chinese than English, since Chinese is the native language for the test students.     
-```{r,echo=FALSE}
-eng.p<-grade$English/150
-plot(chinese.p~grade$Total,type="l",col="red",xlab="Total Grade",ylab="Subject Grade Percentage")
-lines(eng.p~grade$Total,col="blue")
-legend(250,0.9,legend=c("Chinese","English"),col=c("red","blue"),lwd=2)
-
-```
-    
-Are Chinese grades higher than English grades? Use `t test` to analyze.    
-Assume there's Chinese grade is higher than English. Then,     
-```{r,echo=FALSE}
-t.test(chinese.p,eng.p,alternative="greater")
-
-```
-From `t.test` above, p-value is `r t.test(math.p,chinese.p,paired=T)$p.value`, which is much smaller than critical value 0.05. The estimated mean of Chinese and English are XXXXXXX and XXXXXXXX. It means grades of Chinese is better than that of English.
-      
-4. Relationships between a specific subject and total grade       
-Now, think about the question in introduction. Is it true that high grades in `r colnames(grade)[5]` indicate high total grades?
-      
-      
-      
-      
-5. Another high school in this district got an average total grade of 574.38. Assume both high schools have same standard deviation, could total grade of E high school has been drawn from the same distribution?    
-```{r,echo=FALSE}
-t.test(grade$Total,mu=574.38)
-
-```
-
-
-
-
-
-
 
 1. Basic analysis of total grades in both schools    
 ```{r,echo=FALSE}
@@ -285,42 +74,92 @@ t.test(e.total,d.total,alternative="greater")
 All the following analysis between subjects are based on data of E school.      
 (1) Chinese and English    
 It is reasonable to assume that students do better in Chinese than English, in that Chinese is the native language for the students. Is that true?            
-Here, null hypothesis is: Chinese grade is higher than English. Then,
+Here, null hypothesis (H0) is: There is no difference between Chinese and English.     
+And alternative hypothesis (H1) is: Chinese grade is higher than English. Then,
 ```{r,echo=FALSE}
 e.chinese.p <- grade$Chinese[grade$School=="E"]/150
 e.eng.p <- grade$English[grade$School=="E"]/150
 t.test(e.chinese.p,e.eng.p,alternative="greater")
 
 ```
-From `t.test` above, p-value is `r t.test(e.chinese.p,e.eng.p,alternative="greater")$p.value`, which equals to 1. It means probability of type I error equals to 1. So, our null hypothesis is definitely acceptable. Therefore, students did do better in Chinese than English.        
+From `t.test` above, p-value is `r t.test(e.chinese.p,e.eng.p,alternative="greater")$p.value`, which is very high. It means probability of type I error equals to 1. So we cannot reject null hypothesis. But high p value does not mean we can accept null hypothesis. In fact, it only suggests that there is not sufficient evidence against null hypothesis in favour of alternative hypothesis. Therefore, we only know grade of Chinese and English are different.       
 
 (2) Math and Physics    
-When solving physical problems, it is inevitable to use mathematical skills. Then, can we get a conclusion that higher Math grade contributes to higher Physics grade? We can do this by testing if there exist a linear regression between Math grade and Physics grade.      
 ```{r,echo=FALSE}
 par(mfrow = c(1, 1))
 e.math <- grade$Math[grade$School=="E"]
 e.phys <- grade$Physics[grade$School=="E"]
-plot(e.phys~e.math,pch=20,xlab="Math Grade",ylab="Physics Grade",main="XXXXXXXMath Grade vs Physics GradeXXXXXXXX",xlim=c(0,150),ylim=c(0,100))
+plot(e.phys~e.math,pch=20,xlab="Math Grade",ylab="Physics Grade",main="E School Math Grade vs Physics Grade",xlim=c(0,150),ylim=c(0,100))
 segments(x0=0,x1=150*0.6,y0=60,y1=60,lty=2,col="green",lwd=2)
 segments(x0=150*0.6,x1=150*0.6,y0=0,y1=60,lty=2,col="green",lwd=2)
-segments(x0=0,x1=150*0.9,y0=90,y1=90,lty=2,col="red",lwd=2)
-segments(x0=150*0.9,x1=150*0.9,y0=0,y1=90,lty=2,col="red",lwd=2)
-legend(5,84.5,legend=c("Pass line","Excellent line"),col=c("green","red"),lwd=2,lty=2)
+segments(x0=0,x1=150*0.95,y0=95,y1=95,lty=2,col="blue",lwd=2)
+segments(x0=150*0.95,x1=150*0.95,y0=0,y1=95,lty=2,col="blue",lwd=2)
+legend(5,90,legend=c("Pass line","Excellent line"),col=c("green","blue"),lwd=2,lty=2)
 
 ```
-                 
-We can see that most students did well in Math and Physics, but there are still some students did well in Math but bad in Physics. Then is there a general linear regression between these two subjects? We can normalize Math and Physics grade to 1 in that they have different maximum possible grade.         
+        
+Green lines in the figure above, means 60% of the maximum possible grade, i.e. the pass grade. And blue llines means 95% of the maximum possible grade, i.e. the excellent grade. We can see that, most students passed the exam of Math and Physics. But only a few students get the excellent grade.     
+
+When solving physical problems, it is inevitable to use mathematical skills. Then, can we get a conclusion that higher Math grade contributes to higher Physics grade? We can do this by testing if there exist a positive linear correlation between Math grade and Physics grade.         
+Are Math and Physics grade normally distributed? We need to check this first.    
 ```{r,echo=FALSE}
-e.math.p <- grade$Math[grade$School=="E"]/150
-e.phys.p <- grade$Physics[grade$School=="E"]/100
-plot(e.phys.p~e.math.p,pch=20,xlab="Normalized Math Grade",ylab="Normalized Physics Grade",main="XXXXXXXMath Grade vs Physics GradeXXXXXXXX",xlim=c(0,1),ylim=c(0,1))
-
+e.math.hist <- hist(grade$Math[grade$School=="E"],plot=F,breaks=200)
+plot(e.math.hist$density~e.math.hist$mids,type="h",ylab="Density",xlab="Math Grade",main="E School Math Grade Distribution")
+e.math.mean <- mean(e.math)
+e.math.sd <- sd(e.math)
+points(0:1500,dnorm(0:1500,e.math.mean,e.math.sd),type="l",col="red",lwd=2)
 ```
 
+```{r,echo=FALSE}
+e.phys.hist <- hist(e.phys,plot=F,breaks=200)
+plot(e.phys.hist$density~e.phys.hist$mids,type="h",ylab="Density",xlab="Physics Grade",main="E School Physics Grade Distribution")
+e.phys.mean <- mean(e.phys)
+e.phys.sd <- sd(e.phys)
+points(0:1500,dnorm(0:1500,e.phys.mean,e.phys.sd),type="l",col="red",lwd=2)
+```
+       
+From figures above, we can see that Math grade is well normally distributed. But Physics grade is roughly normal distributed. Then, we can use `Pearson's product-moment correlation` test.    
+If the alternative hypothesis (H1) is: the grade of Physics is positively associated with the grade of Math. Then the result is:
+
+```{r,echo=FALSE}
+cor.test(e.phys,e.math,method="pearson",alternative="greater")
+
+```
+From `Pearson's product-moment correlation` test, we get `p value` equals `r  cor.test(e.phys,e.math,method="pearson",alternative="greater")$p.value`. This small `p value` means we should reject our null hypothesis, and the alternative hypothesis might be true. And the `Pearson product-moment correlation coefficient` is 0.669. Therefore, there might be a positive correlation between Math and Physics grade.         
+Then we can find is there a linear regression between the two subjects.      
+```{r,echo=FALSE}
+plot(e.phys~e.math,pch=20,xlab="Math Grade",ylab="Physics Grade",main="E School Math Grade vs Physics Grade",xlim=c(0,150),ylim=c(0,100))
+legend(5,95,legend=c("Linear model"),col=c("red"),lwd=2,lty=1)
+abline(b=0.6369,a=-4.9655,lwd=2,col="red")
+summary(lm(e.phys~e.math))
+
+```                 
+       
+So there exists a linear regression, with `intercept` of -4.9655 and slope of 0.6369. Therefore, good Math skills do contribute to Physics grade.    
 
 
 3. Relationship between subject and total grade      
 All the following analysis are based on data from E school.        
-Though all the subjects contribute to the total grade, they might have different weight. For example, if weight of Math is biggest, then higher Math grade could lead to higher total grade. Here, we could test the weight of subjects Physics and History. These two subjects have the same maximum possible grade, 100. However, the maximum possible grade of Math is 150.       
-(1) Physics vs total grade          
+Though all the subjects contribute to the total grade, they might have different weight. For example, if weight of Math is biggest, then higher Math grade could lead to higher total grade. Here, we could test the weight of subjects Physics and History. These two subjects have the same maximum possible grade, 100. However, the maximum possible grade of Math is 150.        
+
+Physics, history vs total grade          
+
+We use `Pearson's product-moment correlation` test.    
+For Physics:        
+
+```{r,echo=FALSE}
+cor.test(e.total,e.phys,method="pearson")
+
+```
+The `Pearson product-moment correlation coefficient` is 0.6923412.       
+
+For History: 
+
+```{r,echo=FALSE}
+e.hist <- grade$History[grade$School=="E"]
+cor.test(e.total,e.hist,method="pearson")
+
+```
+       
+The `Pearson product-moment correlation coefficient` is 0.5402196, which is smaller than the coefficient of Physics and total grade. Larger coefficient means closer correlation. Therefore, we verify the early assumption, that Physics contributes more to total grade.
 
