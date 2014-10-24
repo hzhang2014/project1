@@ -10,11 +10,16 @@ output: html_document
 grade <- read.table(file="Grade_Analysis.txt", header=T)
 
 ```
-This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year students from two different high schools. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html).      
+This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year students from two different high schools. In this project, we will analyze the difference or similarity between them. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html).      
 
-The project focuses on two high schools. There are `r summary(grade$School)["D"]` students in D shool that participated in this final exam, and `r summary(grade$School)["E"]` students in E school that participated in the exam.In sum,  `r nrow(grade)` students are collected in this project. There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. These two high schools are the Top 2 in the district. In this project, we will analyze the difference or similarity between them.
+The project focuses on two high schools. These two high schools are the Top 2 in the district. There are `r summary(grade$School)["D"]` students in D shool that participated in this final exam, and `r summary(grade$School)["E"]` students in E school that participated in the exam. In sum,  `r nrow(grade)` students took the exam. In this final exam, there are `r ncol(grade)-2` subjects: `r colnames(grade)[3:10]`.           
       
-Both D school and E school are good, but are they really differ from each other? When I was in high school, there were some interesting phenomena, such as many of us could get a higher grade in Chinese than English, students who are good at Math also do well in Physics, and students with high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]` also had higher total grades. Now, I will use the data I collected to test these interesting phenomena.
+* Are the two high schools really different from each other? Both schools are good, but some parents and students still want to know which one is the best. And then students will take the best school as their goal.      
+* Is that true that students have a higher grade in Chinese than English? It seems like to be true in that Chinese is the native language to the test students. However, the exam for Chinese is much more complicated than English. Chinese exam involving more comphrehensive problems. So it's hard to get the conclusion.         
+* Is there a positive correlation between Math and Physics? Physics might be the most difficult subject for first-year high students. Not all the students can handle Physics at the beginning. However, when I was in high school, students in my class, who were good at Physics, also did well at Math.      
+* Which subject contributes most to the total grade? If a students do well in all the subjects, he will definitely get the high total grade. But it happens that he could get a high total grade even he has some weakness in certain subject.       
+
+Questions in this project might not be such important, but these questions confused me when I was young. In fact, I also wonder is it true that girls do well in Arts while boys do well in Science. But I cannot get the data of sex of the students. Therefore, I do this grade analysis.
 
 
 ##Data Analysis    
