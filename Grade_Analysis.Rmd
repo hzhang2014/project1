@@ -111,8 +111,8 @@ legend(5,90,legend=c("Pass line","Excellent line"),col=c("green","blue"),lwd=2,l
         
 Green lines in the figure above, means 60% of the maximum possible grade, i.e. the pass grade. And blue llines means 95% of the maximum possible grade, i.e. the excellent grade. We can see that, most students passed the exam of Math and Physics. But only a few students get the excellent grade.     
 
-When solving physical problems, it is inevitable to use mathematical skills. ***Then, can we get a conclusion that higher Math grade contributes to higher Physics grade?*** We can test this by testing if there exist a positive linear correlation between Math grade and Physics grade.         
-Are Math and Physics grade normally distributed? We need to check this first.    
+When solving physical problems, it is inevitable to use mathematical skills. ***Then, can we get a conclusion that higher Physics grade depends on higher Math grade?*** We can test this by testing if there exist a positive linear correlation between Math grade and Physics grade.         
+***Are Math and Physics grade normally distributed?*** We need to check this first.    
 ```{r,echo=FALSE}
 e.math.hist <- hist(grade$Math[grade$School=="E"],plot=F,breaks=200)
 plot(e.math.hist$density~e.math.hist$mids,type="h",ylab="Density",xlab="Math Grade",main="E School Math Grade Distribution")
@@ -152,7 +152,7 @@ From the analysis above, we know that there exists a linear regression, with int
 * ###Relationship between subject and total grade       
 
 All the following analysis are based on data from E school.        
-Though all the subjects contribute to the total grade, they might have different weight. ***Can we assume that Physics has greater impact on total grades?*** Here, we could test the weight of correlation for two subjects, Physics and History. These two subjects have the same maximum possible grade, 100.       
+Though all the subjects contribute to the total grade, they might have different weight. I am not going to analyze correlation betwwen all the subjects and total grade. I'd like to pick up two subjects, Physics and Histroy. These two subjects have the same maximum possible grade, 100. ***Can we assume that Physics has greater impact on total grades?*** Here, we could test the weight of correlation for two subjects, Physics and History.        
 
 + ####Physics, History vs Total grade          
 
@@ -176,4 +176,4 @@ cor.test(e.total,e.hist,method="pearson")
 The `Pearson product-moment correlation coefficient` is 0.5402, which is smaller than the coefficient of Physics and total grade. Larger coefficient means closer correlation. Therefore, we verify the early assumption, that Physics contributes more to total grade.
      
 ##Conclusion      
-Students in E high school might get higher grades than students in D high school. But we cannot say E school is better than D school based on only one final exam. Students could do better in Chinese than English. This might be owing to Chinese is the native language for these students.  Math does help in Physics. Physics and total grade are more correlated than History and total grade.
+Students in E high school might get higher grades than students in D high school. But we cannot say E school is much better than D school based on only one final exam. So when choosing high school to attend, it does not matter much which one you choose. So it would be more convenient to choose the one that is close to where you live. Students could do better in Chinese than English. This might be owing to Chinese is the native language for these students.  Math does help in Physics. But it does not mean if you have high Math grade, then you must get a high Physics grade. And it's not easy to get a good Physics grade without a good sense in Math. Subjects are not equally correlated to total grade. And Physics and total grade are more correlated than History and total grade.
