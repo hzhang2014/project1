@@ -238,16 +238,22 @@ school.total.max <- aggregate(grade$Total,by=list(grade$School),max)
 school.total.min <- aggregate(grade$Total,by=list(grade$School),min)
 
 ```
-The maximum total grades in D school and E school are `r school.total.max$x`. The minimum total grades in D school and E school are `r school.total.min$x`. The mean total grades in D school and E school are `r school.total.mean$x`. The standard deviation for total grades of D school and E school are `r school.total.sd$x`.  
-Do the total grades of D and E school follow normal distribution?    
+The maximum total grades in D school and E school are `r school.total.max$x`. The minimum total grades in D school and E school are `r school.total.min$x`. The mean total grades in D school and E school are `r school.total.mean$x`. The standard deviation for total grades of D school and E school are `r school.total.sd$x`. These summary information can be plotted out as below:      
 ```{r,echo=FALSE}
-par(mfrow = c(2, 1))
+boxplot(grade$Total~grade$School,xlab="School",ylab="Total Grade",main="Summary of Total Grade")
+
+```
+       
+From the figure above, we can see that the average total grade of E school is a little higher than that of D school. And the total grade of E school is more centralized, while D school is more dispersed. Then,do the total grades of D and E school follow normal distribution?    
+```{r,echo=FALSE}
+par(mfrow = c(1, 1))
 d.total.hist <- hist(grade$Total[grade$School=="D"],plot=F,breaks=200)
 plot(d.total.hist$density~d.total.hist$mids,type="h",ylab="Density",xlab="Total Grade",main="D School Total Grade Distribution")
 d.total.mean <- mean(grade$Total[grade$School=="D"])
 d.total.sd <- sd(grade$Total[grade$School=="D"])
 points(0:1500,dnorm(0:1500,d.total.mean,d.total.sd),type="l",col="red",lwd=2)
 
+e.total.hist <- hist(grade$Total[grade$School=="E"],plot=F,breaks=300)
 plot(e.total.hist$density~e.total.hist$mids,type="h",ylab="Density",xlab="Total Grade",main="E School Total Grade Distribution")
 e.total.mean <- mean(grade$Total[grade$School=="E"])
 e.total.sd <- sd(grade$Total[grade$School=="E"])
@@ -255,36 +261,28 @@ points(0:1500,dnorm(0:1500,e.total.mean,e.total.sd),type="l",col="red",lwd=2)
 
 ```     
         
-From the figures above, we can see that, total grade of E school follows normal distribution well, while D school are not well normally distributed. And total grade of D school are relatively more dispersed. But we can still take D school as normal distribution in future analysis.       
-The mean total grade of D school and E school are `r school.total.mean$x`. Are these two numbers differ from each other? Let's check with `t test`.    
-Null hypothesis (H0) is: no significant difference between the two means.Then, the result of `Welch Two Sample t-test` is:        
+From the figures above, we can see that, total grade of E school follows normal distribution well, while D school are not well normally distributed. And total grade of D school are relatively more dispersed. This conclusion is in accordance with the boxplot above. But we can still take D school as normal distribution in future analysis.       
+From figure of summary, we can see that the average grade is a little different. To be more precise, the mean total grade of D school and E school are `r school.total.mean$x`. Do the two high schools differ in total grade? Let's check with `t test`.    
+Null hypothesis (H0) is: no difference between the two means. Then, the result of `Welch Two Sample t-test` is:        
 ```{r,echo=FALSE}
 d.total <- grade$Total[grade$School=="D"]
 e.total <- grade$Total[grade$School=="E"]
 t.test(d.total,e.total)
 
 ```
-`p value` of `Welch Two Sample t-test` is `r t.test(d.total,e.total)$p.value`, which is much smaller than 0.05. The probility of type I error is very small. It means, our null hypothesis should be rejected. Therefore, there is a siginificant difference between D and E school. Then, is is reliable that the mean total grade of E school greater than that of D school? We still use `Welch Two Sample t-test`.    
-Our null hypothesis is: E school is better than D school in total grade. The result is：    
+`p value` of `Welch Two Sample t-test` is `r t.test(d.total,e.total)$p.value`, which is much smaller than 0.05. The probility of type I error is very small. It means, our null hypothesis should be rejected. Therefore, there is a siginificant difference between D and E school. Then, is it reliable that the mean total grade of E school greater than that of D school? We still use `Welch Two Sample t-test`.    
+Our null hypothesis (H0) is: E school is same as D school in total grade,       
+and alternative hypothesis (H1) is: E school is better than D school. The result is：    
 ```{r，echo=FALSE}
 t.test(e.total,d.total,alternative="greater")
 
 ```
      
-`p value` of `Welch Two Sample t-test` is `r t.test(d.total,e.total,alternative="greater")$p.value`, which is much smaller than 0.05. It means type I error is very small. As a result, we cannot prove our null hypothesis. Therefore, total grade of E school is not significantly greater than D school. In this final exam, E school did better than D school. However, it is not significant.   
-       
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXThe average total grade of the entire city is calculated to be 474.05. Assume D school has the same standard deviation with the entire city, could total grade of D high school has been drawn from the same distribution? XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX     
-Here we use `One  Sample t-test`. The result is:      
-```{r,echo=FALSE}
-t.test(d.total,mu=474.05)
-
-``` 
-         
-`p value` of `One Sample t-test` is `r t.test(d.total,mu=474.05)$p.value`, which is much smaller than 0.05.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      
-        
+`p value` of `Welch Two Sample t-test` is `r t.test(e.total,d.total,alternative="greater")$p.value`, which is much smaller than 0.05. It means probility of type I error is very small. As a result, our null hypothesis should be rejected, and alternative hypothesis might be true. Therefore, in this final exam, E school did better than D school.   
+      
 
 2. Relationship between separate subjects       
-All the analysis between subjects are based on data of E school.      
+All the following analysis between subjects are based on data of E school.      
 (1) Chinese and English    
 It is reasonable to assume that students do better in Chinese than English, in that Chinese is the native language for the students. Is that true?            
 Here, null hypothesis is: Chinese grade is higher than English. Then,
@@ -311,7 +309,7 @@ legend(5,84.5,legend=c("Pass line","Excellent line"),col=c("green","red"),lwd=2,
 
 ```
                  
-We can see that most students did well in Math and Physics, but there are still some students did well in Math but bad in Physics. Then is there a general linear regression between these two subjects? We can normalize Math and Physics grade to 1 in that they have different maximum grade.         
+We can see that most students did well in Math and Physics, but there are still some students did well in Math but bad in Physics. Then is there a general linear regression between these two subjects? We can normalize Math and Physics grade to 1 in that they have different maximum possible grade.         
 ```{r,echo=FALSE}
 e.math.p <- grade$Math[grade$School=="E"]/150
 e.phys.p <- grade$Physics[grade$School=="E"]/100
@@ -323,5 +321,6 @@ plot(e.phys.p~e.math.p,pch=20,xlab="Normalized Math Grade",ylab="Normalized Phys
 
 3. Relationship between subject and total grade      
 All the following analysis are based on data from E school.        
-
+Though all the subjects contribute to the total grade, they might have different weight. For example, if weight of Math is biggest, then higher Math grade could lead to higher total grade. Here, we could test the weight of subjects Physics and History. These two subjects have the same maximum possible grade, 100. However, the maximum possible grade of Math is 150.       
+(1) Physics vs total grade          
 
