@@ -7,7 +7,7 @@ output: html_document
 ***
 ##Introduction 
 ```{r,echo=FALSE}
-grade <- read.table(file="project_new_2.txt", header=T)
+grade <- read.table(file="Grade_Analysis.txt", header=T)
 
 ```
 This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year students from two different high schools. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html).      
