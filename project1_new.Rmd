@@ -1,25 +1,25 @@
 ---
-title: "Project1"
+title: "Project 1 -- Grade Analysis of Two High Schools"
 author: "Hui Zhang"
 date: "Tuesday, October 21, 2014"
 output: html_document
 ---
-
-Introduction 
+***
+##Introduction 
 ```{r,echo=FALSE}
 grade <- read.table(file="project_new_2.txt", header=T)
 
 ```
-This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year high school students. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html).      
+This is the project for the first half of the semester for course Microbiol 612.This project will analyze the final grades of first-year students from two different high schools. All the data are download from [wenku.baidu.com](http://wenku.baidu.com/view/09f6dc3752ea551811a68727.html).      
 
-There are two high schools. `r summary(grade$School)["D"]` students in D shool participated in this final exam, and `r summary(grade$School)["E"]` students in E school participated in the exam.In sum,  `r nrow(grade)` students are collected in this project. These two high schools are the best ones in the district. In this project, we will analyze the difference or similarity between them.
+The project focuses on two high schools. There are `r summary(grade$School)["D"]` students in D shool that participated in this final exam, and `r summary(grade$School)["E"]` students in E school that participated in the exam.In sum,  `r nrow(grade)` students are collected in this project. There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`. These two high schools are the Top 2 in the district. In this project, we will analyze the difference or similarity between them.
       
-There are `r ncol(grade)-2` subjects in the final exam. The `r ncol(grade)-2` subjects are: `r colnames(grade)[3:10]`.When I was in high school, there were some interesting phenomenon, such as students with high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]` also had higher total grades. Now, I will use the grades I collected to test these phenomenon.
+Both D school and E school are good, but are they really differ from each other? When I was in high school, there were some interesting phenomena, such as many of us could get a higher grade in Chinese than English, students who are good at Math also do well in Physics, and students with high grade in `r colnames(grade)[4]` and `r colnames(grade)[6]` also had higher total grades. Now, I will use the data I collected to test these interesting phenomena.
 
 
-Data Analysis    
+##Data Analysis    
 
-1. Basic analysis of total grades in both schools    
+* ###Basic analysis of total grades in both schools    
 ```{r,echo=FALSE}
 school.total.mean <- aggregate(grade$Total,by=list(grade$School),mean)
 school.total.sd <- aggregate(grade$Total,by=list(grade$School),sd)
@@ -33,7 +33,7 @@ boxplot(grade$Total~grade$School,xlab="School",ylab="Total Grade",main="Summary 
 
 ```
        
-From the figure above, we can see that the average total grade of E school is a little higher than that of D school. And the total grade of E school is more centralized, while D school is more dispersed. Then,do the total grades of D and E school follow normal distribution?    
+From the figure above, we can see that the average total grade of E school is a little higher than that of D school. And the total grade of E school is more centralized, while D school is more dispersed. ***Then, do the total grades of D and E school follow normal distribution?***      
 ```{r,echo=FALSE}
 par(mfrow = c(1, 1))
 d.total.hist <- hist(grade$Total[grade$School=="D"],plot=F,breaks=200)
@@ -50,30 +50,36 @@ points(0:1500,dnorm(0:1500,e.total.mean,e.total.sd),type="l",col="red",lwd=2)
 
 ```     
         
-From the figures above, we can see that, total grade of E school follows normal distribution well, while D school are not well normally distributed. And total grade of D school are relatively more dispersed. This conclusion is in accordance with the boxplot above. But we can still take D school as normal distribution in future analysis.       
-From figure of summary, we can see that the average grade is a little different. To be more precise, the mean total grade of D school and E school are `r school.total.mean$x`. Do the two high schools differ in total grade? Let's check with `t test`.    
-Null hypothesis (H0) is: no difference between the two means. Then, the result of `Welch Two Sample t-test` is:        
+From the figures above, we can see that, total grade of E school follows normal distribution well, while D school are not well normally distributed. And the distribution of total grade of D school are relatively more dispersed. This conclusion is in accordance with the Summary figure above. But we can still take D school as normal distribution in future analysis.       
+From figure of Summary, we can see that the average grade is a little different. To be more precise, the mean total grade of D school and E school are `r school.total.mean$x`. ***Then, are the total grades of these two school differ from each other?***  Let's check it with `t test`.    
+Null hypothesis (H0) is: no difference between the two means.      
+And the alternate hypothesis (H1) is: two samples are different from each other.    
+Then, the result of `Welch Two Sample t-test` is:        
 ```{r,echo=FALSE}
 d.total <- grade$Total[grade$School=="D"]
 e.total <- grade$Total[grade$School=="E"]
 t.test(d.total,e.total)
 
 ```
-`p value` of `Welch Two Sample t-test` is `r t.test(d.total,e.total)$p.value`, which is much smaller than 0.05. The probility of type I error is very small. It means, our null hypothesis should be rejected. Therefore, there is a siginificant difference between D and E school. Then, is it reliable that the mean total grade of E school greater than that of D school? We still use `Welch Two Sample t-test`.    
+P value of `Welch Two Sample t-test` is `r t.test(d.total,e.total)$p.value`, which is much smaller than 0.05. The probability of `Type I Error` is very small. It means, our null hypothesis should be rejected. Therefore, there is a siginificant difference between D and E school.        
+***Then, is that reliable that the mean total grade of E school is greater than that of D school?*** We still use `Welch Two Sample t-test`.    
 Our null hypothesis (H0) is: E school is same as D school in total grade,       
-and alternative hypothesis (H1) is: E school is better than D school. The result is：    
+And the alternative hypothesis (H1) is: E school is better than D school. The result is：    
 ```{r，echo=FALSE}
 t.test(e.total,d.total,alternative="greater")
 
 ```
      
-`p value` of `Welch Two Sample t-test` is `r t.test(e.total,d.total,alternative="greater")$p.value`, which is much smaller than 0.05. It means probility of type I error is very small. As a result, our null hypothesis should be rejected, and alternative hypothesis might be true. Therefore, in this final exam, E school did better than D school.   
+P value of `Welch Two Sample t-test` is `r t.test(e.total,d.total,alternative="greater")$p.value`, which is much smaller than 0.05. It means probility of `Type I Error` is very small. As a result, our null hypothesis should be rejected, and alternative hypothesis might be true. Therefore, in this final exam, E school did better than D school.   
       
 
-2. Relationship between separate subjects       
-All the following analysis between subjects are based on data of E school.      
-(1) Chinese and English    
-It is reasonable to assume that students do better in Chinese than English, in that Chinese is the native language for the students. Is that true?            
+* ###Relationship between separate subjects               
+
+All the following analysis between subjects are based on data of E school.           
+
++ ####Chinese and English          
+
+***It is reasonable to assume that students do better in Chinese than English, in that Chinese is the native language for the students. Is that true?***            
 Here, null hypothesis (H0) is: There is no difference between Chinese and English.     
 And alternative hypothesis (H1) is: Chinese grade is higher than English. Then,
 ```{r,echo=FALSE}
@@ -82,9 +88,9 @@ e.eng.p <- grade$English[grade$School=="E"]/150
 t.test(e.chinese.p,e.eng.p,alternative="greater")
 
 ```
-From `t.test` above, p-value is `r t.test(e.chinese.p,e.eng.p,alternative="greater")$p.value`, which is very high. It means probability of type I error equals to 1. So we cannot reject null hypothesis. But high p value does not mean we can accept null hypothesis. In fact, it only suggests that there is not sufficient evidence against null hypothesis in favour of alternative hypothesis. Therefore, we only know grade of Chinese and English are different.       
+From `t.test` above, P value is `r t.test(e.chinese.p,e.eng.p,alternative="greater")$p.value`, which is very high. It means probability of Type I Error is high. So we cannot reject null hypothesis. But it does not mean we can accept null hypothesis. In fact, it only suggests that there is not sufficient evidence against null hypothesis in favour of alternative hypothesis. Therefore, we only know grade of Chinese and English are different.       
 
-(2) Math and Physics    
++ ####Math and Physics    
 ```{r,echo=FALSE}
 par(mfrow = c(1, 1))
 e.math <- grade$Math[grade$School=="E"]
@@ -100,7 +106,7 @@ legend(5,90,legend=c("Pass line","Excellent line"),col=c("green","blue"),lwd=2,l
         
 Green lines in the figure above, means 60% of the maximum possible grade, i.e. the pass grade. And blue llines means 95% of the maximum possible grade, i.e. the excellent grade. We can see that, most students passed the exam of Math and Physics. But only a few students get the excellent grade.     
 
-When solving physical problems, it is inevitable to use mathematical skills. Then, can we get a conclusion that higher Math grade contributes to higher Physics grade? We can do this by testing if there exist a positive linear correlation between Math grade and Physics grade.         
+When solving physical problems, it is inevitable to use mathematical skills. ***Then, can we get a conclusion that higher Math grade contributes to higher Physics grade?*** We can test this by testing if there exist a positive linear correlation between Math grade and Physics grade.         
 Are Math and Physics grade normally distributed? We need to check this first.    
 ```{r,echo=FALSE}
 e.math.hist <- hist(grade$Math[grade$School=="E"],plot=F,breaks=200)
@@ -119,13 +125,13 @@ points(0:1500,dnorm(0:1500,e.phys.mean,e.phys.sd),type="l",col="red",lwd=2)
 ```
        
 From figures above, we can see that Math grade is well normally distributed. But Physics grade is roughly normal distributed. Then, we can use `Pearson's product-moment correlation` test.    
-If the alternative hypothesis (H1) is: the grade of Physics is positively associated with the grade of Math. Then the result is:
+If the alternative hypothesis (H1) is: the grade of Physics is positively associated with the grade of Math. Then the test result is:
 
 ```{r,echo=FALSE}
 cor.test(e.phys,e.math,method="pearson",alternative="greater")
 
 ```
-From `Pearson's product-moment correlation` test, we get `p value` equals `r  cor.test(e.phys,e.math,method="pearson",alternative="greater")$p.value`. This small `p value` means we should reject our null hypothesis, and the alternative hypothesis might be true. And the `Pearson product-moment correlation coefficient` is 0.669. Therefore, there might be a positive correlation between Math and Physics grade.         
+From `Pearson's product-moment correlation` test, we get P value equals `r  cor.test(e.phys,e.math,method="pearson",alternative="greater")$p.value`. This small P value means we should reject our null hypothesis, and the alternative hypothesis might be true. And the `Pearson product-moment correlation coefficient` is 0.669. Therefore, there might be a positive correlation between Math and Physics grade.         
 Then we can find is there a linear regression between the two subjects.      
 ```{r,echo=FALSE}
 plot(e.phys~e.math,pch=20,xlab="Math Grade",ylab="Physics Grade",main="E School Math Grade vs Physics Grade",xlim=c(0,150),ylim=c(0,100))
@@ -135,23 +141,24 @@ summary(lm(e.phys~e.math))
 
 ```                 
        
-So there exists a linear regression, with `intercept` of -4.9655 and slope of 0.6369. Therefore, good Math skills do contribute to Physics grade.    
+From the analysis above, we know that there exists a linear regression, with intercept of -4.9655 and slope of 0.6369. From the figure above, we can see that students with higher Physics grade also have higher Math grade. And there are still some students who have higher Math grade, but relative low Physics grade. Therefore, good Math skill does contribute to higher Physics, but it is not a rule. 
 
 
-3. Relationship between subject and total grade      
+* ###Relationship between subject and total grade       
+
 All the following analysis are based on data from E school.        
-Though all the subjects contribute to the total grade, they might have different weight. For example, if weight of Math is biggest, then higher Math grade could lead to higher total grade. Here, we could test the weight of subjects Physics and History. These two subjects have the same maximum possible grade, 100. However, the maximum possible grade of Math is 150.        
+Though all the subjects contribute to the total grade, they might have different weight. ***Can we assume that Physics has greater impact on total grades?*** Here, we could test the weight of correlation for two subjects, Physics and History. These two subjects have the same maximum possible grade, 100.       
 
-Physics, history vs total grade          
++ ####Physics, History vs Total grade          
 
-We use `Pearson's product-moment correlation` test.    
+We still use `Pearson's product-moment correlation` test.    
 For Physics:        
 
 ```{r,echo=FALSE}
 cor.test(e.total,e.phys,method="pearson")
 
 ```
-The `Pearson product-moment correlation coefficient` is 0.6923412.       
+The `Pearson product-moment correlation coefficient` is 0.6923.       
 
 For History: 
 
@@ -161,5 +168,7 @@ cor.test(e.total,e.hist,method="pearson")
 
 ```
        
-The `Pearson product-moment correlation coefficient` is 0.5402196, which is smaller than the coefficient of Physics and total grade. Larger coefficient means closer correlation. Therefore, we verify the early assumption, that Physics contributes more to total grade.
-
+The `Pearson product-moment correlation coefficient` is 0.5402, which is smaller than the coefficient of Physics and total grade. Larger coefficient means closer correlation. Therefore, we verify the early assumption, that Physics contributes more to total grade.
+     
+##Conclusion      
+Students in E high school might get higher grades than students in D high school. But we cannot say E school is better than D school based on only one final exam. Students could do better in Chinese than English. This might be owing to Chinese is the native language for these students.  Math does help in Physics. Physics and total grade are more correlated than History and total grade.
